@@ -1,0 +1,29 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список активных опросов</title>
+</head>
+<body>
+<h1>Список активных опросов:</h1>
+<ul>
+    {% for quiz in quizzes %}
+        <li><p><a href="{% url 'quiz_detail' quiz.pk %}">{{ quiz.title }}</a></p></li>
+    {% empty %}
+        <h1>Пока нет опросов</h1>
+    {% endfor %}
+</ul>
+<h1>Пройденные опросы:</h1>
+<ul>
+    {% for quiz in all_quizzes %}
+        <h3><a href="{% url 'results' quiz.pk %}">{{ quiz }}</a></h3>
+        <li>Дата начала опроса: {{ quiz.start_date }}
+        <li>Дата окончания опроса: {{ quiz.end_date }}
+        <li>Дата прохождения опроса: {{ quiz.passage_date }}
+    {% empty %}
+        <h1>Вы ещё не прошли ни одного опроса</h1>
+    {% endfor %}
+</ul>
+</body>
+</html>

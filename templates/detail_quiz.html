@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Опрос</title>
+</head>
+<body>
+<h1>Опрос: {{ quiz.title }}</h1>
+<h2>Описание опроса: {{ quiz.description }}</h2>
+<h3>Дата начала опроса: {{ quiz.start_date }}</h3>
+<h3>Дата окончания опроса: {{ quiz.end_date }}</h3>
+<form method="post">
+    {% csrf_token %}
+    {% for question in quiz.questions.all %}
+        <h1>Текст вопроса:<br>{{ question.text }}</h1>
+        {% if question.type != 'текст' %}
+            <h1>Варианты ответов:</h1>
+            {% if question.type == 'один вариант' %}
+                {% for answer in question.split_all_answers %}
+                    <input required name="one_answer {{ question }}" type="radio" value="{{ answer }}">
+                    {{ answer }}
+                {% endfor %}
+            {% elif question.type == 'несколько вариантов' %}
+                <select multiple required name="several_answers {{ question }}">
+                    {% for answer in question.split_all_answers %}
+                        <option value="{{ answer }}">{{ answer }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        {% else %}
+            <h1>Ответ:</h1>
+            <input required type="text" name="{{ question }}" value="{{ answer }}">
+        {% endif %}
+    {% endfor %}
+    <br><br>
+    <br><br>
+    <button type="submit">Закончить опрос</button>
+    <h4><a href="{% url 'quizzes' %}">На главную</a></h4>
+</form>
+</body>

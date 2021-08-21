@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Результаты опроса {{ results.title }}</h1>
+<h2>Дата начала опроса: {{ results.start_date }}</h2>
+<h2>Дата окончания опроса: {{ results.end_date }}</h2>
+<h1>Результаты:</h1>
+{% for question in results.questions.all %}
+    <p>Вопрос "{{ question }}":</p>
+    <p>Ваш ответ:</p>
+    <ul>
+        {% for answer in question.answer_set.all %}
+            <li>{{ answer }}</li><br>
+        {% empty %}
+            <h3>Вы не ответили на данный вопрос</h3>
+        {% endfor %}
+    </ul>
+{% endfor %}
+<h4><a href="{% url 'quizzes' %}">На главную</a></h4>
+</body>
+</html>

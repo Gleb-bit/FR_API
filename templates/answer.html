@@ -1,0 +1,19 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вопрос</title>
+</head>
+<body>
+<h1>Текст вопроса:<br>{{ question.text }}</h1>
+{% if question.type != 'текст' %}
+    <h1>Ответы:</h1>
+    {% for answer in question.all_answers.split %}
+        <p>{{ answer }}</p>
+    {% endfor %}
+{% else %}
+    {{ form.answer }}
+{% endif %}
+</body>
+</html>
