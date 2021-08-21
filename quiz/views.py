@@ -2,9 +2,7 @@ import datetime
 
 from django.shortcuts import render, redirect
 from django.views import generic
-from django.views.generic.edit import FormMixin
 
-from quiz.forms import AnswerForm
 from quiz.models import Quiz, Question, Answer
 
 now = datetime.datetime.now()
@@ -23,11 +21,10 @@ class QuizListView(generic.ListView):
                       {self.context_object_name: active_quizzes, 'all_quizzes': all_quizzes})
 
 
-class QuizDetailView(FormMixin, generic.DetailView):
+class QuizDetailView(generic.DetailView):
     model = Quiz
     template_name = 'detail_quiz.html'
     context_object_name = 'quiz'
-    form_class = AnswerForm
 
     def post(self, request, *args, **kwargs):
         quiz = self.get_object(self.queryset)
@@ -67,4 +64,3 @@ class AnswerView(generic.CreateView):
     model = Question
     template_name = 'answer.html'
     context_object_name = 'question'
-    form_class = AnswerForm
