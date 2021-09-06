@@ -27,7 +27,7 @@ router.register('questions', QuestionViewSet, 'questions')
 
 schema_view = get_schema_view(
     openapi.Info(
-        title='Blog and projects API',
+        title='Quiz API',
         default_version='v1',
         description='description of app',
         terms_of_service='https://www.google.com/polices/terms/',
